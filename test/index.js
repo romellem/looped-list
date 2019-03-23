@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import LoopedList, { LoopedListItem } from '../src';
+import { LoopedList, LoopedListItem } from '../src';
 
 describe('Constructor Tests', () => {
   it('should not initialize when constructed with no value', () => {
