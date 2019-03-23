@@ -6,7 +6,7 @@ Simple doubly linked list implementation. Uses a custom class
 ### Example Usage
 
 ```
-import LoopedList from 'looped-list';
+import { LoopedList } from 'looped-list';
 
 let list = new LoopedList(1);
 
