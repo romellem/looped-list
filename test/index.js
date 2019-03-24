@@ -26,4 +26,8 @@ describe('Constructor Tests', () => {
     list.move(1);
     assert.equal(list.head.value, 1);
   });
+  
+  it('should throw an error when not used as a constructor', () => {
+    assert.throws(LoopedList);
+  });
 });
