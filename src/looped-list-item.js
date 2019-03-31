@@ -14,6 +14,10 @@ class LoopedListItem {
     }
 
     next(n = 1) {
+        if (n < 1) {
+            return this;
+        }
+
         let current = this;
         do {
             current = current.next_item;
@@ -22,6 +26,10 @@ class LoopedListItem {
     }
 
     prev(n = 1) {
+        if (n < 1) {
+            return this;
+        }
+
         let current = this;
         do {
             current = current.prev_item;
