@@ -40,6 +40,10 @@ class LoopedList {
     }
 
     move(steps = 1) {
+        if (steps < 1) {
+            return this;
+        }
+
         // Steps can be negative to move backwards
         let direction = steps > 0 ? 'next' : 'prev';
 
