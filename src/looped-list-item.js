@@ -9,7 +9,7 @@ class LoopedListItem {
         // Set next and prev to itself
         if (is_first) {
             this.next_item = this;
-            this.prev = this;
+            this.prev_item = this;
         }
     }
 
