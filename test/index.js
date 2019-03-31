@@ -52,9 +52,7 @@ describe('LoopedList Tests', () => {
             assert.throws(LoopedList);
         });
     });
-});
 
-describe('LoopedList', () => {
     describe('`move`', () => {
         it('should not tick forward when passed a move length less than 1', () => {
             let list = new LoopedList([1, 2]);
