@@ -67,3 +67,31 @@ describe('LoopedList', () => {
         });
     });
 });
+
+describe('LoopedListItem Tests', () => {
+    describe('`next`', () => {
+        it('should not move forward when passed a length less than 1', () => {
+            const list = new LoopedList([1, 2]);
+            let list_head = list.head;
+
+            let next = list_head.next(0);
+            assert.strictEqual(list_head, next);
+
+            next = list_head.next(-1);
+            assert.strictEqual(list_head, next);
+        });
+    });
+
+    describe('`prev`', () => {
+        it('should not move back when passed a length less than 1', () => {
+            const list = new LoopedList([1, 2]);
+            let list_head = list.head;
+
+            let prev = list_head.prev(0);
+            assert.strictEqual(list_head, prev);
+
+            prev = list_head.prev(-1);
+            assert.strictEqual(list_head, prev);
+        });
+    });
+});
