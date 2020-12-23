@@ -98,13 +98,13 @@ class LoopedList {
             return 0;
         }
 
-        this.move(1);
+        let next = head.next_item;
 
         let length = 1;
 
-        while (this.head !== head) {
+        while (next !== head) {
             length++;
-            this.move(1);
+            next = next.next_item;
         }
 
         return length;
