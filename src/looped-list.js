@@ -12,8 +12,7 @@ class LoopedList {
              */
             let intial_value = value.shift();
 
-            // This sets `this.head`
-            this.init(intial_value);
+            this.setHead(intial_value);
 
             if (value.length) {
                 // Loop through remaining values
@@ -25,18 +24,25 @@ class LoopedList {
                 this.move(1);
             }
         } else if (typeof value !== 'undefined') {
-            // This sets `this.head`
-            this.init(value);
+            this.setHead(value);
         }
     }
 
-    init(value) {
+    setHead(value) {
         if (!(value instanceof LoopedListItem)) {
             value = new LoopedListItem(value, true);
         }
         this.head = value;
 
         return this;
+    }
+
+    /**
+     * @deprecated
+     * @alias setHead
+     */
+    init(...args) {
+        return this.setHead(...args);
     }
 
     move(steps = 1) {
