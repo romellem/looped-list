@@ -14,8 +14,12 @@ class LoopedListItem {
     }
 
     next(n = 1) {
-        if (n < 1) {
+        n = Math.trunc(n);
+
+        if (n === 0) {
             return this;
+        } else if (n < 0) {
+            return this.prev(Math.abs(n));
         }
 
         let current = this;
@@ -26,8 +30,12 @@ class LoopedListItem {
     }
 
     prev(n = 1) {
-        if (n < 1) {
+        n = Math.trunc(n);
+
+        if (n === 0) {
             return this;
+        } else if (n < 0) {
+            return this.next(Math.abs(n));
         }
 
         let current = this;
