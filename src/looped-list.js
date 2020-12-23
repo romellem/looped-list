@@ -10,13 +10,13 @@ class LoopedList {
              * When an array is passed, use the first value as the `head`,
              * and loop through other values and insert them.
              */
-            let intial_value = value.shift();
+            let intial_value = value[0];
 
             this.setHead(intial_value);
 
-            if (value.length) {
+            if (value.length > 2) {
                 // Loop through remaining values
-                for (let i = 0; i < value.length; i++) {
+                for (let i = 1; i < value.length; i++) {
                     this.insertNext(value[i]);
                 }
 
