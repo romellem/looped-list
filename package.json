@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib",
-    "test": "mocha --require @babel/register --require @babel/polyfill --recursive",
+    "test": "mocha --require @babel/register --recursive",
     "build": "rollup -c",
     "prepublish": "npm run clean && npm run test && npm run build"
   },
