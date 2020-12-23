@@ -46,6 +46,8 @@ class LoopedList {
     }
 
     move(steps = 1) {
+        steps = Math.trunc(steps);
+
         // Steps can be negative to move backwards
         let direction = steps > 0 ? 'next' : 'prev';
 
