@@ -10,9 +10,9 @@
   ],
   "scripts": {
     "clean": "rimraf lib",
-    "test": "mocha --require @babel/register --recursive",
+    "test": "npm run clean && npm run build && mocha --require @babel/register",
     "build": "rollup -c",
-    "prepublish": "npm run clean && npm run build && npm run test"
+    "prepublish": "npm run test"
   },
   "repository": {
     "type": "git",

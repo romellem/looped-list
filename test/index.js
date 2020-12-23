@@ -28,68 +28,46 @@ describe('LoopedList Tests', () => {
             assert.strictEqual(list.head.value, 1);
         });
 
-        it('should initialize with a LoopedListItem when constructed with a value', () => {
-            let list = new LoopedList(1);
-            assert.strictEqual(list.head instanceof LoopedListItem, true);
-            assert.strictEqual(list.head.value, 1);
-        });
-
-        it('should allow for arrays to be passed', () => {
-            let list = new LoopedList([1, 2, 3]);
-            assert.strictEqual(list.head.value, 1);
-
-            list.move(1);
-            assert.strictEqual(list.head.value, 2);
-
-            list.move(1);
-            assert.strictEqual(list.head.value, 3);
-
-            list.move(1);
-            assert.strictEqual(list.head.value, 1);
-        });
-
         it('should throw an error when not used as a constructor', () => {
             assert.throws(LoopedList);
         });
     });
 
     describe('`move`', () => {
-        it('should not tick forward when passed a move length less than 1', () => {
-            let list = new LoopedList([1, 2]);
+        it('should tick backwards when passed a move length less than 0', () => {
+            let list = new LoopedList([1, 2, 3]);
+
+            assert.strictEqual(list.head.value, 1);
 
             list.move(0);
             assert.strictEqual(list.head.value, 1);
 
             list.move(-1);
-            assert.strictEqual(list.head.value, 1);
+            assert.strictEqual(list.head.value, 3);
         });
     });
 });
 
 describe('LoopedListItem Tests', () => {
     describe('`next`', () => {
-        it('should not move forward when passed a length less than 1', () => {
-            const list = new LoopedList([1, 2]);
-            let list_head = list.head;
+        it('should move backwards when passed a length less than 0', () => {
+            const list = new LoopedList([1, 2, 3]);
+            assert.strictEqual(list.head.value, 1);
 
-            let next = list_head.next(0);
-            assert.strictEqual(list_head, next);
-
-            next = list_head.next(-1);
-            assert.strictEqual(list_head, next);
+            let prev = list.head.next(-1);
+            assert.strictEqual(list.head.prev_item, prev);
+            assert.strictEqual(prev.value, 3);
         });
     });
 
     describe('`prev`', () => {
-        it('should not move back when passed a length less than 1', () => {
-            const list = new LoopedList([1, 2]);
-            let list_head = list.head;
+        it('should move forward when passed a length less than 0', () => {
+            const list = new LoopedList([1, 2, 3]);
+            assert.strictEqual(list.head.value, 1);
 
-            let prev = list_head.prev(0);
-            assert.strictEqual(list_head, prev);
-
-            prev = list_head.prev(-1);
-            assert.strictEqual(list_head, prev);
+            let next = list.head.prev(-1);
+            assert.strictEqual(list.head.next_item, next);
+            assert.strictEqual(next.value, 2);
         });
     });
 });
