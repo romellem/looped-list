@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf lib",
     "test": "mocha --require @babel/register --require @babel/polyfill --recursive",
-    "build": "cross-env BABEL_ENV=production rollup -c",
+    "build": "rollup -c",
     "prepublish": "npm run clean && npm run test && npm run build"
   },
   "repository": {
@@ -30,7 +30,6 @@
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
-    "cross-env": "^7.0.3",
     "mocha": "^8.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.35.1",
