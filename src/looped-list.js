@@ -1,6 +1,9 @@
 import LoopedListItem from './looped-list-item';
 
 class LoopedList {
+    /**
+     * @param {Any} value
+     */
     constructor(value) {
         // Keep head unset if we didn't pass in a value
         this.head = undefined;
@@ -28,6 +31,10 @@ class LoopedList {
         }
     }
 
+    /**
+     * @param {Any} value
+     * @returns {LoopedList} Returns `this`
+     */
     setHead(value) {
         if (!(value instanceof LoopedListItem)) {
             value = new LoopedListItem(value, true);
@@ -38,13 +45,16 @@ class LoopedList {
     }
 
     /**
-     * @deprecated
-     * @alias setHead
+     * @deprecated - Use `setHead(value)` instead.
      */
     init(...args) {
         return this.setHead(...args);
     }
 
+    /**
+     * @param {Number} steps
+     * @returns {LoopedList} Returns `this`
+     */
     move(steps = 1) {
         steps = Math.trunc(steps);
 
@@ -57,6 +67,10 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @param {Any|LoopedListItem} item
+     * @returns {LoopedList} Returns `this`
+     */
     insertNext(item) {
         if (!(item instanceof LoopedListItem)) {
             item = new LoopedListItem(item);
@@ -66,6 +80,10 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @param {Any|LoopedListItem} item
+     * @returns {LoopedList} Returns `this`
+     */
     insertPrev(item) {
         if (!(item instanceof LoopedListItem)) {
             item = new LoopedListItem(item);
@@ -75,6 +93,9 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @returns {LoopedListItem} Returns the old `head`
+     */
     popHeadMoveNext() {
         let next_item = this.head.next_item;
         let old_head = this.head.removeSelf();
@@ -83,6 +104,9 @@ class LoopedList {
         return old_head;
     }
 
+    /**
+     * @returns {LoopedListItem} Returns the old `head`
+     */
     popHeadMovePrev() {
         let prev_item = this.head.prev_item;
         let old_head = this.head.removeSelf();
@@ -91,6 +115,9 @@ class LoopedList {
         return old_head;
     }
 
+    /**
+     * @returns {Number} Returns the number of items in our LoopedList.
+     */
     length() {
         let head = this.head;
 

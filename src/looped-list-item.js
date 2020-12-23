@@ -1,4 +1,8 @@
 class LoopedListItem {
+    /**
+     * @param {Any} value
+     * @param {Boolean} [is_first=false]
+     */
     constructor(value, is_first = false) {
         this.value = value;
 
@@ -13,6 +17,10 @@ class LoopedListItem {
         }
     }
 
+    /**
+     * @param {Number} n
+     * @returns {LoopedListItem}
+     */
     next(n = 1) {
         n = Math.trunc(n);
 
@@ -29,6 +37,10 @@ class LoopedListItem {
         return current;
     }
 
+    /**
+     * @param {Number} n
+     * @returns {LoopedListItem}
+     */
     prev(n = 1) {
         n = Math.trunc(n);
 
@@ -45,6 +57,10 @@ class LoopedListItem {
         return current;
     }
 
+    /**
+     * @param {LoopedListItem} item
+     * @returns {LoopedListItem} Returns the item we just inserted
+     */
     insertNext(item) {
         this.next_item.prev_item = item;
         item.next_item = this.next_item;
@@ -55,6 +71,10 @@ class LoopedListItem {
         return item;
     }
 
+    /**
+     * @param {LoopedListItem} item
+     * @returns {LoopedListItem} Returns the item we just inserted
+     */
     insertPrev(item) {
         this.prev_item.next_item = item;
         item.next_item = this;
@@ -65,6 +85,9 @@ class LoopedListItem {
         return item;
     }
 
+    /**
+     * @returns {LoopedListItem}
+     */
     removeSelf() {
         this.next_item.prev_item = this.prev_item;
         this.prev_item.next_item = this.next_item;
