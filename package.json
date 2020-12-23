@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib",
+    "docs": "jsdoc2md src/*.js > temp-api.md && node scripts/generate-docs.js && rm temp-api.md",
     "test": "npm run clean && npm run build && mocha --require @babel/register",
     "build": "rollup -c",
     "prepublish": "npm run test"
@@ -30,6 +31,7 @@
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
+    "jsdoc-to-markdown": "^6.0.1",
     "mocha": "^8.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.35.1",
