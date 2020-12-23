@@ -91,6 +91,11 @@ class LoopedList {
 
     length() {
         let head = this.head;
+
+        if (!head) {
+            return 0;
+        }
+
         this.move(1);
 
         let length = 1;
