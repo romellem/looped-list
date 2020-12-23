@@ -1,6 +1,9 @@
 import LoopedListItem from './looped-list-item';
 
 class LoopedList {
+    /**
+     * @param {Any} value
+     */
     constructor(value) {
         // Keep head unset if we didn't pass in a value
         this.head = undefined;
@@ -10,14 +13,13 @@ class LoopedList {
              * When an array is passed, use the first value as the `head`,
              * and loop through other values and insert them.
              */
-            let intial_value = value.shift();
+            let intial_value = value[0];
 
-            // This sets `this.head`
-            this.init(intial_value);
+            this.setHead(intial_value);
 
-            if (value.length) {
+            if (value.length > 2) {
                 // Loop through remaining values
-                for (let i = 0; i < value.length; i++) {
+                for (let i = 1; i < value.length; i++) {
                     this.insertNext(value[i]);
                 }
 
@@ -25,12 +27,15 @@ class LoopedList {
                 this.move(1);
             }
         } else if (typeof value !== 'undefined') {
-            // This sets `this.head`
-            this.init(value);
+            this.setHead(value);
         }
     }
 
-    init(value) {
+    /**
+     * @param {Any} value
+     * @returns {LoopedList} Returns `this`
+     */
+    setHead(value) {
         if (!(value instanceof LoopedListItem)) {
             value = new LoopedListItem(value, true);
         }
@@ -39,7 +44,20 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @deprecated - Use `setHead(value)` instead.
+     */
+    init(...args) {
+        return this.setHead(...args);
+    }
+
+    /**
+     * @param {Number} steps
+     * @returns {LoopedList} Returns `this`
+     */
     move(steps = 1) {
+        steps = Math.trunc(steps);
+
         // Steps can be negative to move backwards
         let direction = steps > 0 ? 'next' : 'prev';
 
@@ -49,6 +67,10 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @param {Any|LoopedListItem} item
+     * @returns {LoopedList} Returns `this`
+     */
     insertNext(item) {
         if (!(item instanceof LoopedListItem)) {
             item = new LoopedListItem(item);
@@ -58,6 +80,10 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @param {Any|LoopedListItem} item
+     * @returns {LoopedList} Returns `this`
+     */
     insertPrev(item) {
         if (!(item instanceof LoopedListItem)) {
             item = new LoopedListItem(item);
@@ -67,6 +93,9 @@ class LoopedList {
         return this;
     }
 
+    /**
+     * @returns {LoopedListItem} Returns the old `head`
+     */
     popHeadMoveNext() {
         let next_item = this.head.next_item;
         let old_head = this.head.removeSelf();
@@ -75,6 +104,9 @@ class LoopedList {
         return old_head;
     }
 
+    /**
+     * @returns {LoopedListItem} Returns the old `head`
+     */
     popHeadMovePrev() {
         let prev_item = this.head.prev_item;
         let old_head = this.head.removeSelf();
@@ -83,15 +115,23 @@ class LoopedList {
         return old_head;
     }
 
+    /**
+     * @returns {Number} Returns the number of items in our LoopedList.
+     */
     length() {
         let head = this.head;
-        this.move(1);
+
+        if (!head) {
+            return 0;
+        }
+
+        let next = head.next_item;
 
         let length = 1;
 
-        while (this.head !== head) {
+        while (next !== head) {
             length++;
-            this.move(1);
+            next = next.next_item;
         }
 
         return length;
