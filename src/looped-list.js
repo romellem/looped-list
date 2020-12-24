@@ -32,6 +32,7 @@ class LoopedList {
     }
 
     /**
+     * @chainable
      * @param {Any} value
      * @returns {LoopedList} Returns `this`
      */
@@ -52,6 +53,7 @@ class LoopedList {
     }
 
     /**
+     * @chainable
      * @param {Number} steps
      * @returns {LoopedList} Returns `this`
      */
@@ -68,6 +70,7 @@ class LoopedList {
     }
 
     /**
+     * @chainable
      * @param {Any|LoopedListItem} item
      * @returns {LoopedList} Returns `this`
      */
@@ -81,6 +84,7 @@ class LoopedList {
     }
 
     /**
+     * @chainable
      * @param {Any|LoopedListItem} item
      * @returns {LoopedList} Returns `this`
      */
