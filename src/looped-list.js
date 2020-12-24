@@ -136,6 +136,29 @@ class LoopedList {
 
         return length;
     }
+
+    /**
+     * @alias LoopedList.prototype[@@iterator]
+     * @generator
+     * @function
+     * @yield {Any} Yields the values in our listed, starting with `this.head`.
+     */
+    *[Symbol.iterator]() {
+        let head = this.head;
+
+        if (!head) {
+            return;
+        }
+
+        yield head.value;
+
+        let next = head.next_item;
+
+        while (next !== head) {
+            yield next.value;
+            next = next.next_item;
+        }
+    }
 }
 
 export default LoopedList;
