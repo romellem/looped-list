@@ -2,10 +2,10 @@
   "name": "looped-list",
   "version": "0.3.0",
   "description": "Doubly Linked List implementation",
-  "main": "./lib/umd/looped-list.js",
+  "main": "./lib/cjs/looped-list.js",
   "module": "./lib/esm/looped-list.esm.js",
   "files": [
-    "lib/umd/",
+    "lib/cjs/",
     "lib/esm/"
   ],
   "scripts": {

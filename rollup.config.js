@@ -31,14 +31,13 @@ esmProdConfig.output = Object.assign({}, esmConfig.output, {
 });
 esmProdConfig.plugins = [...esmConfig.plugins, terser()];
 
-// UMD config
-const umdConfig = Object.assign({}, commonConfig);
-umdConfig.output = Object.assign({}, commonConfig.output, {
-	file: 'lib/umd/looped-list.js',
-	format: 'umd',
-	name: 'hoverImage',
+// CJS config
+const cjsConfig = Object.assign({}, commonConfig);
+cjsConfig.output = Object.assign({}, commonConfig.output, {
+	file: 'lib/cjs/looped-list.js',
+	format: 'cjs',
 });
-umdConfig.plugins = [
+cjsConfig.plugins = [
 	...commonConfig.plugins,
 	babel({
 		babelHelpers: 'bundled',
@@ -46,22 +45,13 @@ umdConfig.plugins = [
 	}),
 ];
 
-// Production config
-const umdProdConfig = Object.assign({}, umdConfig);
-umdProdConfig.output = Object.assign({}, umdConfig.output, {
-	file: 'lib/umd/looped-list.min.js',
-	sourcemap: false,
-});
-umdProdConfig.plugins = [...umdConfig.plugins, terser()];
-
 let configurations = [];
 
 // prettier-ignore
 configurations.push(
 	esmConfig,
 	esmProdConfig,
-	umdConfig,
-	umdProdConfig
+	cjsConfig,
 );
 
 for (let configuration of configurations) {

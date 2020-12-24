@@ -1,6 +1,5 @@
-import 'regenerator-runtime/runtime';
 import assert from 'assert';
-import { LoopedList, LoopedListItem } from '../lib/umd/looped-list.js';
+import { LoopedList, LoopedListItem } from '../lib/cjs/looped-list.js';
 
 describe('LoopedList Tests', () => {
     describe('constructor', () => {
