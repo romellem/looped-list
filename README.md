@@ -120,6 +120,7 @@ console.log(list.head.value); // 1
     * [.popHeadMoveNext()](#LoopedList+popHeadMoveNext) ⇒ [<code>LoopedListItem</code>](#LoopedListItem)
     * [.popHeadMovePrev()](#LoopedList+popHeadMovePrev) ⇒ [<code>LoopedListItem</code>](#LoopedListItem)
     * [.length()](#LoopedList+length) ⇒ <code>Number</code>
+    * [.[@@iterator]()](#LoopedList+[@@iterator])
 
 <a name="new_LoopedList_new"></a>
 
@@ -189,4 +190,8 @@ console.log(list.head.value); // 1
 
 ### loopedList.length() ⇒ <code>Number</code>
 **Kind**: instance method of [<code>LoopedList</code>](#LoopedList)  
-**Returns**: <code>Number</code> - Returns the number of items in our LoopedList.
+**Returns**: <code>Number</code> - Returns the number of items in our LoopedList.  
+<a name="LoopedList+[@@iterator]"></a>
+
+### loopedList.[@@iterator]()
+**Kind**: instance method of [<code>LoopedList</code>](#LoopedList)
