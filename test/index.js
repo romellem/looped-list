@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import assert from 'assert';
 import { LoopedList, LoopedListItem } from '../lib/umd/looped-list.js';
 
@@ -44,6 +45,34 @@ describe('LoopedList Tests', () => {
 
             list.move(-1);
             assert.strictEqual(list.head.value, 3);
+        });
+    });
+
+    describe('`@@iterator`', () => {
+        it('should allow you to iterate over the internal list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let values = [1, 2, 3, 4, 5];
+            let i = 0;
+            for (let item of list) {
+                let value = values[i++];
+                assert.strictEqual(item, value);
+            }
+        });
+
+        it('should allow you to spread into an array', () => {
+            let values = [1, 2, 3, 4, 5];
+            let list = new LoopedList(values);
+
+            let spread_list = [...list];
+            assert.deepStrictEqual(spread_list, values);
+        });
+
+        it('should spread nothing when we have an empty list', () => {
+            let list = new LoopedList();
+
+            let spread_list = [...list];
+            assert.deepStrictEqual(spread_list, []);
         });
     });
 });
