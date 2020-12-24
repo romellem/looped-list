@@ -11,9 +11,9 @@
   "scripts": {
     "clean": "rimraf lib",
     "docs": "jsdoc2md src/*.js > temp-api.md && node scripts/generate-docs.js && rm temp-api.md",
-    "test": "npm run clean && npm run build && mocha --require @babel/register",
+    "test": "mocha --require @babel/register",
     "build": "rollup -c",
-    "prepublish": "npm run test"
+    "prepublish": "npm run clean && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
