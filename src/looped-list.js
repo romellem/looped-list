@@ -62,8 +62,9 @@ class LoopedList {
     }
 
     /**
+     * Moves the head pointer forward or backward by a number of steps.
      * @chainable
-     * @param {Number} steps
+     * @param {Number} steps Any number. If a negative number is passed, the head pointer moves backwards.
      * @returns {LoopedList} Returns `this`
      */
     move(steps = 1) {
