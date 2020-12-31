@@ -33,16 +33,25 @@ class LoopedList {
 
     /**
      * @chainable
-     * @param {Any} value
+     * @param {Any} value - If the value is not a `LoopedListItem`, it'll be converted into one, unless `undefined` is passed, which essentially "unsets" the head.
      * @returns {LoopedList} Returns `this`
      */
     setHead(value) {
-        if (!(value instanceof LoopedListItem)) {
+        if (!(value instanceof LoopedListItem) && value !== undefined) {
             value = new LoopedListItem(value, true);
         }
         this.head = value;
 
         return this;
+    }
+
+    /**
+     * Sets the `head` to `undefined`, effectively removing all list items.
+     * @chainable
+     * @returns {LoopedList} Returns `this`
+     */
+    unsetHead() {
+        return this.setHead(undefined);
     }
 
     /**
@@ -53,8 +62,9 @@ class LoopedList {
     }
 
     /**
+     * Moves the head pointer forward or backward by a number of steps.
      * @chainable
-     * @param {Number} steps
+     * @param {Number} steps Any number. If a negative number is passed, the head pointer moves backwards.
      * @returns {LoopedList} Returns `this`
      */
     move(steps = 1) {
@@ -142,25 +152,72 @@ class LoopedList {
     }
 
     /**
-     * @alias LoopedList.prototype[@@iterator]
-     * @generator
-     * @function
-     * @yield {Any} Yields the values in our listed, starting with `this.head`.
+     * Searches for the item and returns that item if it is found. Returns `undefined` if the value is not found.
+     * @param {Any|LoopedListItem} value You can pass in a primative value or a `LoopedListItem`.
+     * @returns {LoopedListItem|undefined}
      */
-    *[Symbol.iterator]() {
+    find(value) {
+        let get_value = !(value instanceof LoopedListItem);
         let head = this.head;
 
         if (!head) {
             return;
         }
 
-        yield head.value;
+        let next = this.head;
+
+        do {
+            let next_value = get_value ? next.value : next;
+            if (value === next_value) {
+                return next;
+            }
+            next = next.next_item;
+        } while (next !== head);
+    }
+
+    /**
+     * An iterator for the `LoopedListItem` objects.
+     * @alias LoopedList.prototype[@@iterator]
+     * @generator
+     * @function
+     * @returns {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
+     */
+    *[Symbol.iterator]() {
+        yield* this.items();
+    }
+
+    /**
+     * An iterator for the `LoopedListItem` objects.
+     * @generator
+     * @returns {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
+     */
+    *items() {
+        let head = this.head;
+
+        if (!head) {
+            return;
+        }
+
+        yield head;
 
         let next = head.next_item;
 
         while (next !== head) {
-            yield next.value;
+            yield next;
             next = next.next_item;
+        }
+    }
+
+    /**
+     * An iterator for _values_ of the `LoopedListItem` objects.
+     * @generator
+     * @returns {Any} Yields the _values_ of the `LoopedListItem` objects in our list, starting with `this.head`.
+     * @example assert.deepStrictEqual([...(new LoopedList([1, 2, 3])).values()], [1, 2, 3]);
+     */
+    *values() {
+        let items = this.items();
+        for (let item of items) {
+            yield item.value;
         }
     }
 }

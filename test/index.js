@@ -34,6 +34,21 @@ describe('LoopedList Tests', () => {
     });
 
     describe('`move`', () => {
+        it('should tick forwards 1 when called without an argument', () => {
+            let list = new LoopedList([1, 2, 3]);
+
+            assert.strictEqual(list.head.value, 1);
+
+            list.move();
+            assert.strictEqual(list.head.value, 2);
+
+            list.move();
+            assert.strictEqual(list.head.value, 3);
+
+            list.move();
+            assert.strictEqual(list.head.value, 1);
+        });
+
         it('should tick backwards when passed a move length less than 0', () => {
             let list = new LoopedList([1, 2, 3]);
 
@@ -47,6 +62,61 @@ describe('LoopedList Tests', () => {
         });
     });
 
+    describe('`find`', () => {
+        it('should return undefined on an empty list', () => {
+            let empty_list = new LoopedList();
+            let found = empty_list.find(1);
+
+            assert.strictEqual(found, undefined);
+        });
+
+        it('should return a primative element that is the head', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let head = list.head;
+            let found = list.find(1);
+
+            assert.strictEqual(found.value, 1);
+            assert.strictEqual(found, head);
+        });
+
+        it('should return undefined on a value that is not preset', () => {
+            let list = new LoopedList([1, 2, 3]);
+            let found = list.find(9);
+
+            assert.strictEqual(found, undefined);
+        });
+
+        it('should not adjust the head of the list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let head = list.head;
+            let found = list.find(3);
+
+            assert.strictEqual(found.value, 3);
+            assert.notStrictEqual(found, head);
+            assert.strictEqual(head, list.head);
+        });
+
+        it('should allow for searching for a LoopedListItem', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let three = list.head.next_item.next_item;
+            let found = list.find(three);
+
+            assert.strictEqual(found.value, 3);
+            assert.strictEqual(found, three);
+        });
+
+        it('should not find a LoopedListItem even if they have the same value', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let other_three = new LoopedListItem(3);
+            let found = list.find(other_three);
+            let found_real = list.find(3);
+
+            assert.strictEqual(found, undefined);
+            assert.notStrictEqual(found_real, other_three);
+            assert.strictEqual(found_real.value, other_three.value);
+        });
+    });
+
     describe('`@@iterator`', () => {
         it('should allow you to iterate over the internal list', () => {
             let list = new LoopedList([1, 2, 3, 4, 5]);
@@ -54,6 +124,75 @@ describe('LoopedList Tests', () => {
             let values = [1, 2, 3, 4, 5];
             let i = 0;
             for (let item of list) {
+                let value = values[i++];
+                assert.strictEqual(item.value, value);
+            }
+        });
+
+        it('should allow you to spread into an array', () => {
+            let values = [1, 2, 3, 4, 5];
+            let list = new LoopedList(values);
+
+            let spread_list = [...list].map((v) => v.value);
+            assert.deepStrictEqual(spread_list, values);
+        });
+
+        it('should spread nothing when we have an empty list', () => {
+            let list = new LoopedList();
+
+            let spread_list = [...list];
+            assert.deepStrictEqual(spread_list, []);
+        });
+    });
+
+    describe('`items`', () => {
+        it('should yield the exact LoopedListItem', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let iter = list.items();
+            let length = list.length();
+            for (let i = 0; i < length; i++) {
+                let iter_item = iter.next().value;
+                let head_item = list.head;
+                assert.strictEqual(iter_item, head_item);
+                list.move(1);
+            }
+        });
+
+        it('should allow you to iterate over the internal list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let values = [1, 2, 3, 4, 5];
+            let i = 0;
+            for (let item of list.items()) {
+                let value = values[i++];
+                assert.strictEqual(item.value, value);
+            }
+        });
+
+        it('should allow you to spread into an array', () => {
+            let values = [1, 2, 3, 4, 5];
+            let list = new LoopedList(values);
+
+            let spread_list = [...list.items()].map((v) => v.value);
+            assert.deepStrictEqual(spread_list, values);
+        });
+
+        it('should spread nothing when we have an empty list', () => {
+            let list = new LoopedList();
+
+            let spread_list = [...list.items()];
+            assert.deepStrictEqual(spread_list, []);
+        });
+    });
+
+    describe('`values`', () => {
+        it('should allow you to iterate over the internal list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let values = [1, 2, 3, 4, 5];
+            let i = 0;
+            for (let item of list.values()) {
                 let value = values[i++];
                 assert.strictEqual(item, value);
             }
@@ -63,14 +202,14 @@ describe('LoopedList Tests', () => {
             let values = [1, 2, 3, 4, 5];
             let list = new LoopedList(values);
 
-            let spread_list = [...list];
+            let spread_list = [...list.values()];
             assert.deepStrictEqual(spread_list, values);
         });
 
         it('should spread nothing when we have an empty list', () => {
             let list = new LoopedList();
 
-            let spread_list = [...list];
+            let spread_list = [...list.values()];
             assert.deepStrictEqual(spread_list, []);
         });
     });

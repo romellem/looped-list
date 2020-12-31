@@ -7,8 +7,8 @@ class LoopedListItem {
         this.value = value;
 
         // Pointers to other LoopedListItems
-        this.next_item;
-        this.prev_item;
+        this.next_item = undefined;
+        this.prev_item = undefined;
 
         // Set next and prev to itself
         if (is_first) {
