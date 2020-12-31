@@ -47,6 +47,61 @@ describe('LoopedList Tests', () => {
         });
     });
 
+    describe('`find`', () => {
+        it('should return undefined on an empty list', () => {
+            let empty_list = new LoopedList();
+            let found = empty_list.find(1);
+
+            assert.strictEqual(found, undefined);
+        });
+
+        it('should return a primative element that is the head', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let head = list.head;
+            let found = list.find(1);
+
+            assert.strictEqual(found.value, 1);
+            assert.strictEqual(found, head);
+        });
+
+        it('should return undefined on a value that is not preset', () => {
+            let list = new LoopedList([1, 2, 3]);
+            let found = list.find(9);
+
+            assert.strictEqual(found, undefined);
+        });
+
+        it('should not adjust the head of the list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let head = list.head;
+            let found = list.find(3);
+
+            assert.strictEqual(found.value, 3);
+            assert.notStrictEqual(found, head);
+            assert.strictEqual(head, list.head);
+        });
+
+        it('should allow for searching for a LoopedListItem', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let three = list.head.next_item.next_item;
+            let found = list.find(three);
+
+            assert.strictEqual(found.value, 3);
+            assert.strictEqual(found, three);
+        });
+
+        it('should not find a LoopedListItem even if they have the same value', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+            let other_three = new LoopedListItem(3);
+            let found = list.find(other_three);
+            let found_real = list.find(3);
+
+            assert.strictEqual(found, undefined);
+            assert.notStrictEqual(found_real, other_three);
+            assert.strictEqual(found_real.value, other_three.value);
+        });
+    });
+
     describe('`@@iterator`', () => {
         it('should allow you to iterate over the internal list', () => {
             let list = new LoopedList([1, 2, 3, 4, 5]);
