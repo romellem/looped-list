@@ -176,18 +176,20 @@ class LoopedList {
     }
 
     /**
+     * An iterator for the `LoopedListItem` objects.
      * @alias LoopedList.prototype[@@iterator]
      * @generator
      * @function
-     * @yield {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
+     * @returns {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
      */
     *[Symbol.iterator]() {
         yield* this.items();
     }
 
     /**
+     * An iterator for the `LoopedListItem` objects.
      * @generator
-     * @yield {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
+     * @returns {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
      */
     *items() {
         let head = this.head;
@@ -207,8 +209,10 @@ class LoopedList {
     }
 
     /**
+     * An iterator for _values_ of the `LoopedListItem` objects.
      * @generator
-     * @yield {Any} Yields the _values_ of the `LoopedListItem` objects in our list, starting with `this.head`.
+     * @returns {Any} Yields the _values_ of the `LoopedListItem` objects in our list, starting with `this.head`.
+     * @example assert.deepStrictEqual([...(new LoopedList([1, 2, 3])).values()], [1, 2, 3]);
      */
     *values() {
         let items = this.items();
