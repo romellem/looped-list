@@ -33,16 +33,25 @@ class LoopedList {
 
     /**
      * @chainable
-     * @param {Any} value
+     * @param {Any} value - If the value is not a `LoopedListItem`, it'll be converted into one, unless `undefined` is passed, which essentially "unsets" the head.
      * @returns {LoopedList} Returns `this`
      */
     setHead(value) {
-        if (!(value instanceof LoopedListItem)) {
+        if (!(value instanceof LoopedListItem) && value !== undefined) {
             value = new LoopedListItem(value, true);
         }
         this.head = value;
 
         return this;
+    }
+
+    /**
+     * Sets the `head` to `undefined`, effectively removing all list items.
+     * @chainable
+     * @returns {LoopedList} Returns `this`
+     */
+    unsetHead() {
+        return this.setHead(undefined);
     }
 
     /**
