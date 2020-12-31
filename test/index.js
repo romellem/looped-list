@@ -110,7 +110,7 @@ describe('LoopedList Tests', () => {
             let i = 0;
             for (let item of list) {
                 let value = values[i++];
-                assert.strictEqual(item, value);
+                assert.strictEqual(item.value, value);
             }
         });
 
@@ -118,7 +118,7 @@ describe('LoopedList Tests', () => {
             let values = [1, 2, 3, 4, 5];
             let list = new LoopedList(values);
 
-            let spread_list = [...list];
+            let spread_list = [...list].map(v => v.value);
             assert.deepStrictEqual(spread_list, values);
         });
 
