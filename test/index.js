@@ -129,6 +129,62 @@ describe('LoopedList Tests', () => {
             assert.deepStrictEqual(spread_list, []);
         });
     });
+
+    describe('`items`', () => {
+        it('should allow you to iterate over the internal list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let values = [1, 2, 3, 4, 5];
+            let i = 0;
+            for (let item of list.items()) {
+                let value = values[i++];
+                assert.strictEqual(item.value, value);
+            }
+        });
+
+        it('should allow you to spread into an array', () => {
+            let values = [1, 2, 3, 4, 5];
+            let list = new LoopedList(values);
+
+            let spread_list = [...list.items()].map(v => v.value);
+            assert.deepStrictEqual(spread_list, values);
+        });
+
+        it('should spread nothing when we have an empty list', () => {
+            let list = new LoopedList();
+
+            let spread_list = [...list.items()];
+            assert.deepStrictEqual(spread_list, []);
+        });
+    });
+
+    describe('`values`', () => {
+        it('should allow you to iterate over the internal list', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let values = [1, 2, 3, 4, 5];
+            let i = 0;
+            for (let item of list.values()) {
+                let value = values[i++];
+                assert.strictEqual(item, value);
+            }
+        });
+
+        it('should allow you to spread into an array', () => {
+            let values = [1, 2, 3, 4, 5];
+            let list = new LoopedList(values);
+
+            let spread_list = [...list.values()];
+            assert.deepStrictEqual(spread_list, values);
+        });
+
+        it('should spread nothing when we have an empty list', () => {
+            let list = new LoopedList();
+
+            let spread_list = [...list.values()];
+            assert.deepStrictEqual(spread_list, []);
+        });
+    });
 });
 
 describe('LoopedListItem Tests', () => {
