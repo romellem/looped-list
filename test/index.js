@@ -34,6 +34,21 @@ describe('LoopedList Tests', () => {
     });
 
     describe('`move`', () => {
+        it('should tick forwards 1 when called without an argument', () => {
+            let list = new LoopedList([1, 2, 3]);
+
+            assert.strictEqual(list.head.value, 1);
+
+            list.move();
+            assert.strictEqual(list.head.value, 2);
+
+            list.move();
+            assert.strictEqual(list.head.value, 3);
+
+            list.move();
+            assert.strictEqual(list.head.value, 1);
+        });
+
         it('should tick backwards when passed a move length less than 0', () => {
             let list = new LoopedList([1, 2, 3]);
 
@@ -118,7 +133,7 @@ describe('LoopedList Tests', () => {
             let values = [1, 2, 3, 4, 5];
             let list = new LoopedList(values);
 
-            let spread_list = [...list].map(v => v.value);
+            let spread_list = [...list].map((v) => v.value);
             assert.deepStrictEqual(spread_list, values);
         });
 
@@ -131,6 +146,19 @@ describe('LoopedList Tests', () => {
     });
 
     describe('`items`', () => {
+        it('should yield the exact LoopedListItem', () => {
+            let list = new LoopedList([1, 2, 3, 4, 5]);
+
+            let iter = list.items();
+            let length = list.length();
+            for (let i = 0; i < length; i++) {
+                let iter_item = iter.next().value;
+                let head_item = list.head;
+                assert.strictEqual(iter_item, head_item);
+                list.move(1);
+            }
+        });
+
         it('should allow you to iterate over the internal list', () => {
             let list = new LoopedList([1, 2, 3, 4, 5]);
 
@@ -146,7 +174,7 @@ describe('LoopedList Tests', () => {
             let values = [1, 2, 3, 4, 5];
             let list = new LoopedList(values);
 
-            let spread_list = [...list.items()].map(v => v.value);
+            let spread_list = [...list.items()].map((v) => v.value);
             assert.deepStrictEqual(spread_list, values);
         });
 
