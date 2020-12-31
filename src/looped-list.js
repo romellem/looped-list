@@ -152,25 +152,68 @@ class LoopedList {
     }
 
     /**
-     * @alias LoopedList.prototype[@@iterator]
-     * @generator
-     * @function
-     * @yield {Any} Yields the values in our listed, starting with `this.head`.
+     * Searches for the item and returns that item if it is found. Returns `undefined` if the value is not found.
+     * @param {Any|LoopedListItem} value You can pass in a primative value or a `LoopedListItem`.
+     * @returns {LoopedListItem|undefined}
      */
-    *[Symbol.iterator]() {
+    find(value) {
+        let get_value = !(value instanceof LoopedListItem);
         let head = this.head;
 
         if (!head) {
             return;
         }
 
-        yield head.value;
+        let next = this.head;
+
+        do {
+            let next_value = get_value ? next.value : next;
+            if (value === next_value) {
+                return next;
+            }
+            next = next.next_item;
+        } while (next !== head);
+    }
+
+    /**
+     * @alias LoopedList.prototype[@@iterator]
+     * @generator
+     * @function
+     * @yield {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
+     */
+    *[Symbol.iterator]() {
+        yield* this.items();
+    }
+
+    /**
+     * @generator
+     * @yield {Any} Yields the `LoopedListItem` objects in our list, starting with `this.head`.
+     */
+    *items() {
+        let head = this.head;
+
+        if (!head) {
+            return;
+        }
+
+        yield head;
 
         let next = head.next_item;
 
         while (next !== head) {
-            yield next.value;
+            yield next;
             next = next.next_item;
+        }
+    }
+
+    /**
+     * @generator
+     * @yield {Any} Yields the _values_ of the `LoopedListItem` objects in our list, starting with `this.head`.
+     */
+    *values() {
+        let items = this.items();
+        for (let item of items) {
+            yield item.value;
         }
     }
 }
